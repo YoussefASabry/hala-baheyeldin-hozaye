@@ -169,7 +169,8 @@ function ArtworksManager({ setError, setSuccess }) {
       const artworkId = form.id || (crypto.randomUUID?.() || 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16) }))
       const payload = {
         id: artworkId, title: form.title || '', year: form.year || '', medium: form.medium,
-        length_in: form.length_in || null, width_in: form.width_in || null,
+        length_in: form.length_cm ? +(form.length_cm / 2.54).toFixed(2) : null,
+        width_in: form.width_cm ? +(form.width_cm / 2.54).toFixed(2) : null,
         description: form.description, price: form.price || 0,
         status: form.status || 'available',
         is_published: form.is_published !== undefined ? form.is_published : true,
@@ -253,7 +254,7 @@ function ArtworksManager({ setError, setSuccess }) {
         <table>
           <thead>
             <tr>
-              <th style={{ width: 70 }}>#</th><th>Image</th><th>Medium</th><th>Size (in)</th><th>Status</th><th>Price</th><th>Actions</th>
+              <th style={{ width: 70 }}>#</th><th>Image</th><th>Medium</th><th>Size (cm)</th><th>Status</th><th>Price</th><th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -294,7 +295,7 @@ function ArtworksManager({ setError, setSuccess }) {
                 </td>
                 <td>{a.artwork_images?.[0]?.url ? <Image src={a.artwork_images[0].url} alt="" width={56} height={56} style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: 6 }} /> : '—'}</td>
                 <td style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{a.medium || '—'}</td>
-                <td style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{a.length_in && a.width_in ? `${a.length_in} × ${a.width_in}` : '—'}</td>
+                <td style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{a.length_in && a.width_in ? `${(a.length_in * 2.54).toFixed(1)} × ${(a.width_in * 2.54).toFixed(1)}` : '—'}</td>
                 <td>{a.status}</td>
                 <td>EGP {(a.price || 0).toLocaleString()}</td>
                 <td style={{ whiteSpace: 'nowrap' }}>
@@ -314,7 +315,8 @@ function ArtworkForm({ item, usedMediums, onSave, onCancel, busy }) {
   const [form, setForm] = useState({
     id: item.id || null, title: item.title || '',
     year: item.year || '', medium: item.medium || '',
-    length_in: item.length_in || '', width_in: item.width_in || '',
+    length_cm: item.length_in ? +(item.length_in * 2.54).toFixed(1) : '',
+    width_cm: item.width_in ? +(item.width_in * 2.54).toFixed(1) : '',
     description: item.description || '', price: item.price || '',
     status: item.status || 'available',
     is_published: item.is_published !== undefined ? item.is_published : true,
@@ -382,12 +384,12 @@ function ArtworkForm({ item, usedMediums, onSave, onCancel, busy }) {
           </select>
         </div>
         <div className="admin-field">
-          <label>Length (in)</label>
-          <input placeholder="0" type="number" value={form.length_in} onChange={set('length_in')} />
+          <label>Length (cm)</label>
+          <input placeholder="0" type="number" value={form.length_cm} onChange={set('length_cm')} />
         </div>
         <div className="admin-field">
-          <label>Width (in)</label>
-          <input placeholder="0" type="number" value={form.width_in} onChange={set('width_in')} />
+          <label>Width (cm)</label>
+          <input placeholder="0" type="number" value={form.width_cm} onChange={set('width_cm')} />
         </div>
         <div className="admin-field">
           <label>Price (EGP)</label>
