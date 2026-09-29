@@ -570,7 +570,7 @@ p { color: var(--ink); line-height: 1.8; }
 .masonry-col { display: flex; flex-direction: column; gap: 28px; flex: 1; min-width: 0; }
 
 .work-preview-grid {
-    max-height: 520px;
+    max-height: 960px;
     overflow: hidden;
     position: relative;
 }
@@ -579,7 +579,7 @@ p { color: var(--ink); line-height: 1.8; }
     content: '';
     position: absolute;
     left: 0; right: 0; bottom: 0;
-    height: 420px;
+    height: 160px;
     background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, var(--bg) 100%);
     pointer-events: none;
 }
@@ -591,8 +591,8 @@ p { color: var(--ink); line-height: 1.8; }
     justify-content: center;
 }
 
-@media (max-width: 1024px) { .work-preview-grid { max-height: 900px; } }
-@media (max-width: 560px) { .work-preview-grid { max-height: 700px; } .masonry-row { gap: 14px; } .masonry-col { gap: 14px; } }
+@media (max-width: 1024px) { .work-preview-grid { max-height: 1050px; } .work-preview-wrap::after { height: 140px; } }
+@media (max-width: 560px) { .work-preview-grid { max-height: 900px; } .work-preview-wrap::after { height: 110px; } .masonry-row { gap: 14px; } .masonry-col { gap: 14px; } }
 
 /* ============================================================
    FRAME CARD — vintage / museum-placard treatment
@@ -608,7 +608,7 @@ p { color: var(--ink); line-height: 1.8; }
     position: relative;
     background: var(--surface);
     border: 1px solid var(--line);
-    padding: 14px;
+    padding: clamp(6px, 2.5vw, 14px);
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
 }
@@ -624,16 +624,16 @@ p { color: var(--ink); line-height: 1.8; }
 
 .frame-card-corner {
     position: absolute;
-    width: 18px;
-    height: 18px;
+    width: clamp(10px, 1.6vw, 18px);
+    height: clamp(10px, 1.6vw, 18px);
     border: 2px solid var(--accent);
     opacity: 0.7;
     pointer-events: none;
 }
-.frame-card-corner.tl { top: 5px; left: 5px; border-right: none; border-bottom: none; }
-.frame-card-corner.tr { top: 5px; right: 5px; border-left: none; border-bottom: none; }
-.frame-card-corner.bl { bottom: 5px; left: 5px; border-right: none; border-top: none; }
-.frame-card-corner.br { bottom: 5px; right: 5px; border-left: none; border-top: none; }
+.frame-card-corner.tl { top: clamp(3px, 0.6vw, 5px); left: clamp(3px, 0.6vw, 5px); border-right: none; border-bottom: none; }
+.frame-card-corner.tr { top: clamp(3px, 0.6vw, 5px); right: clamp(3px, 0.6vw, 5px); border-left: none; border-bottom: none; }
+.frame-card-corner.bl { bottom: clamp(3px, 0.6vw, 5px); left: clamp(3px, 0.6vw, 5px); border-right: none; border-top: none; }
+.frame-card-corner.br { bottom: clamp(3px, 0.6vw, 5px); right: clamp(3px, 0.6vw, 5px); border-left: none; border-top: none; }
 
 .frame-card-img {
     width: 100%;
