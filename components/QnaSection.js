@@ -6,7 +6,7 @@ export default function QnaSection({ items }) {
   return (
     <div className="qna-list">
       {items.map((qa, i) => (
-        <details className="qna-item" key={qa.id} open={i === 0}>
+        <details className="qna-item" key={qa.id}>
           <summary className="qna-summary">
             <span className="qna-num">{String(i + 1).padStart(2, '0')}</span>
             <span className="qna-summary-text">
