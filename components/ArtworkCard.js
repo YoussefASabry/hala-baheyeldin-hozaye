@@ -12,7 +12,7 @@ const STATUS_LABELS = {
 export default function ArtworkCard({ artwork }) {
   const status = artwork.status || 'available'
   const priceLabel = artwork.price ? `EGP ${(artwork.price || 0).toLocaleString()}` : ''
-  const ratio = artwork.length_in && artwork.width_in ? `${artwork.length_in} / ${artwork.width_in}` : '4 / 5'
+  const ratio = artwork.length_in && artwork.width_in ? `${artwork.width_in} / ${artwork.length_in}` : '4 / 5'
   const label = artwork.title || artwork.medium || 'Untitled'
 
   return (
