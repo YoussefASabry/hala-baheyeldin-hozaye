@@ -8,6 +8,10 @@ import { getAdminClient } from '@/lib/admin-client'
 
 const TABS = ['Artworks', 'Profile', 'Q & A']
 
+async function revalidateSite() {
+  try { await fetch('/api/revalidate', { method: 'POST' }) } catch (e) {}
+}
+
 export default function AdminPage() {
   const [tab, setTab] = useState('Artworks')
   const [error, setError] = useState('')
@@ -117,6 +121,7 @@ function ArtworksManager({ setError, setSuccess }) {
       await Promise.all(items.map((item, i) => supabase.from('artworks').update({ sort_order: i }).eq('id', item.id)))
       setSuccess('Order saved!')
       setDirty(false)
+      revalidateSite()
     } catch (e) { setError(e.message) }
     setBusy(false)
   }
@@ -150,6 +155,7 @@ function ArtworksManager({ setError, setSuccess }) {
       await Promise.all(ordered.map((item, i) => supabase.from('artworks').update({ sort_order: i }).eq('id', item.id)))
       setItems(ordered)
       setSuccess('Order saved!')
+      revalidateSite()
     } catch (e) { setError(e.message) }
     setBusy(false)
     setNumberingMode(false)
@@ -188,6 +194,7 @@ function ArtworksManager({ setError, setSuccess }) {
         }
       }
       setSuccess('Saved'); setEdit(null); load()
+      revalidateSite()
     } catch (e) { setError(e.message) }
     setBusy(false)
   }
@@ -200,6 +207,7 @@ function ArtworksManager({ setError, setSuccess }) {
       const { error } = await supabase.from('artworks').update({ deleted_at: new Date().toISOString() }).eq('id', id)
       if (error) throw error
       setSuccess('Deleted'); load()
+      revalidateSite()
     } catch (e) { setError(e.message) }
     setBusy(false)
   }
@@ -327,6 +335,7 @@ function ArtworkForm({ item, usedMediums, onSave, onCancel, busy }) {
       const supabase = await getAdminClient()
       await supabase.from('artwork_images').delete().eq('id', imageId)
       setExistingImages((prev) => prev.filter((img) => img.id !== imageId))
+      revalidateSite()
     } catch (e) { alert(e.message) }
     setImageBusy(false)
   }
@@ -339,6 +348,7 @@ function ArtworkForm({ item, usedMediums, onSave, onCancel, busy }) {
       await supabase.from('artwork_images').update({ is_primary: false }).eq('artwork_id', form.id)
       await supabase.from('artwork_images').update({ is_primary: true }).eq('id', imageId)
       setExistingImages((prev) => prev.map((img) => ({ ...img, is_primary: img.id === imageId })))
+      revalidateSite()
     } catch (e) { alert(e.message) }
     setImageBusy(false)
   }
@@ -451,6 +461,7 @@ function ProfileManager({ setError, setSuccess }) {
         if (error) throw error
       }
       setSuccess('Profile updated')
+      revalidateSite()
     } catch (e) { setError(e.message) }
     setBusy(false)
   }
@@ -546,6 +557,7 @@ function QnaManager({ setError, setSuccess }) {
       await Promise.all(items.map((item, i) => supabase.from('qna').update({ sort_order: i }).eq('id', item.id)))
       setSuccess('Order saved!')
       setDirty(false)
+      revalidateSite()
     } catch (e) { setError(e.message) }
     setBusy(false)
   }
@@ -562,6 +574,7 @@ function QnaManager({ setError, setSuccess }) {
         if (error) throw error
       }
       setSuccess('Saved'); setEdit(null); load()
+      revalidateSite()
     } catch (e) { setError(e.message) }
     setBusy(false)
   }
@@ -573,6 +586,7 @@ function QnaManager({ setError, setSuccess }) {
       const { error } = await supabase.from('qna').delete().eq('id', id)
       if (error) throw error
       setSuccess('Deleted'); load()
+      revalidateSite()
     } catch (e) { setError(e.message) }
   }
 
