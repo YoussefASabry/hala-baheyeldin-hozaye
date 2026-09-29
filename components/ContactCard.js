@@ -36,5 +36,27 @@ export default function ContactCard({ icon, label, value, type }) {
     )
   }
 
+  if (type === 'call') {
+    const digits = value.replace(/[^+\d]/g, '')
+    return (
+      <a href={`tel:${digits}`} className="contact-item" style={{ textDecoration: 'none', cursor: 'pointer' }}>
+        <span className="contact-icon">{icon}</span>
+        <div className="contact-label">{label}</div>
+        <div className="contact-value">{value}</div>
+      </a>
+    )
+  }
+
+  if (type === 'whatsapp') {
+    const digits = value.replace(/\D/g, '')
+    return (
+      <a href={`https://wa.me/${digits}`} target="_blank" rel="noopener noreferrer" className="contact-item" style={{ textDecoration: 'none', cursor: 'pointer' }}>
+        <span className="contact-icon">{icon}</span>
+        <div className="contact-label">{label}</div>
+        <div className="contact-value">{value}</div>
+      </a>
+    )
+  }
+
   return null
 }

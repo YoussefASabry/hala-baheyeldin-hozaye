@@ -3,7 +3,7 @@ import { getArtistProfile, getArtworks, getQna } from '@/lib/db'
 import ContactCard from '@/components/ContactCard'
 import MasonryGrid from '@/components/MasonryGrid'
 import QnaSection from '@/components/QnaSection'
-import { InstagramIcon, PhoneIcon } from '@/components/icons'
+import { InstagramIcon, PhoneIcon, WhatsAppIcon } from '@/components/icons'
 
 export const dynamic = 'force-dynamic'
 
@@ -82,7 +82,8 @@ export default async function HomePage() {
             <h2>Contacts</h2>
           </div>
           <div className="contact-strip">
-            <ContactCard icon={<PhoneIcon />} label="Phone / WhatsApp" value={profile?.contact_phone || 'Not set'} type="phone" />
+            <ContactCard icon={<PhoneIcon />} label="Call" value={profile?.contact_phone || 'Not set'} type="call" />
+            <ContactCard icon={<WhatsAppIcon />} label="WhatsApp" value={profile?.whatsapp_number || 'Not set'} type="whatsapp" />
             <ContactCard icon={<InstagramIcon />} label="Instagram" value={profile?.instagram_url || 'Not set'} type="instagram" />
           </div>
         </div>

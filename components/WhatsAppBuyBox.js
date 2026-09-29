@@ -36,6 +36,12 @@ export default function WhatsAppBuyBox({ artwork }) {
     window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
   }
 
+  const handleInquire = () => {
+    const paintingUrl = typeof window !== 'undefined' ? window.location.href : ''
+    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(paintingUrl)}`
+    window.open(whatsappUrl, '_blank', 'noopener,noreferrer')
+  }
+
   const renderButton = () => {
     if (artwork.status === 'sold') {
       return <button disabled className="btn btn-secondary" style={{ opacity: 0.5, cursor: 'not-allowed' }}>Sold</button>
@@ -49,6 +55,7 @@ export default function WhatsAppBuyBox({ artwork }) {
   return (
     <div className="detail-actions">
       {renderButton()}
+      <button onClick={handleInquire} className="btn btn-secondary">Inquire About This Artwork</button>
       <button onClick={handleShare} className="btn btn-secondary">Share</button>
       <Link href="/gallery" className="btn btn-secondary">Back to Gallery</Link>
     </div>
