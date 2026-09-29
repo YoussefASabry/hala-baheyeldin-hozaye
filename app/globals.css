@@ -585,14 +585,28 @@ p { color: var(--ink); line-height: 1.8; }
 }
 
 .show-more-wrap {
-    position: relative;
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 160px;
     z-index: 2;
     display: flex;
+    align-items: center;
     justify-content: center;
+    pointer-events: none;
 }
+.show-more-wrap > a { pointer-events: auto; }
 
-@media (max-width: 1024px) { .work-preview-grid { max-height: 1050px; } .work-preview-wrap::after { height: 140px; } }
-@media (max-width: 560px) { .work-preview-grid { max-height: 900px; } .work-preview-wrap::after { height: 110px; } .masonry-row { gap: 14px; } .masonry-col { gap: 14px; } }
+@media (max-width: 1024px) {
+    .work-preview-grid { max-height: 1050px; }
+    .work-preview-wrap::after { height: 140px; }
+    .show-more-wrap { height: 140px; }
+}
+@media (max-width: 560px) {
+    .work-preview-grid { max-height: 900px; }
+    .work-preview-wrap::after { height: 110px; }
+    .show-more-wrap { height: 110px; }
+    .masonry-row { gap: 14px; } .masonry-col { gap: 14px; }
+}
 
 /* ============================================================
    FRAME CARD — vintage / museum-placard treatment
