@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 
 const STATUS_LABELS = {
   available: 'Available',
@@ -23,7 +24,13 @@ export default function ArtworkCard({ artwork }) {
         <span className="frame-card-corner br" />
         <div className="frame-card-img" style={{ aspectRatio: ratio }}>
           {artwork.image ? (
-            <img src={artwork.image} alt={label} />
+            <Image
+              src={artwork.image}
+              alt={label}
+              fill
+              sizes="(max-width: 560px) 33vw, (max-width: 1024px) 33vw, 25vw"
+              style={{ objectFit: 'cover' }}
+            />
           ) : (
             <span className="frame-card-noimg">{label}</span>
           )}

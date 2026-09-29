@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import Image from 'next/image'
 
 export default function ImageSlideshow({ images, title }) {
   const [index, setIndex] = useState(0)
@@ -13,7 +14,14 @@ export default function ImageSlideshow({ images, title }) {
   return (
     <div>
       <div style={{ position: 'relative', borderRadius: 12, overflow: 'hidden', boxShadow: 'var(--shadow-lg)', aspectRatio: '4/3', background: '#E2E6EC' }}>
-        <img src={images[index]} alt={`${title} ${index + 1}`} style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block' }} />
+        <Image
+          src={images[index]}
+          alt={`${title} ${index + 1}`}
+          fill
+          priority={index === 0}
+          sizes="(max-width: 768px) 100vw, 700px"
+          style={{ objectFit: 'contain' }}
+        />
         {images.length > 1 && (
           <>
             <button onClick={prev} style={{ position: 'absolute', left: 8, top: '50%', transform: 'translateY(-50%)', background: 'rgba(0,0,0,0.4)', color: '#fff', border: 'none', borderRadius: '50%', width: 36, height: 36, fontSize: 18, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', backdropFilter: 'blur(4px)' }}>&larr;</button>
@@ -29,7 +37,15 @@ export default function ImageSlideshow({ images, title }) {
       {images.length > 1 && (
         <div style={{ display: 'flex', gap: 8, marginTop: 12, overflowX: 'auto', paddingBottom: 4 }}>
           {images.map((url, i) => (
-            <img key={i} src={url} alt={`${title} ${i + 1}`} onClick={() => setIndex(i)} style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 6, cursor: 'pointer', border: i === index ? '2px solid var(--coffee)' : '2px solid transparent', flexShrink: 0 }} />
+            <Image
+              key={i}
+              src={url}
+              alt={`${title} ${i + 1}`}
+              width={60}
+              height={60}
+              onClick={() => setIndex(i)}
+              style={{ width: 60, height: 60, objectFit: 'cover', borderRadius: 6, cursor: 'pointer', border: i === index ? '2px solid var(--coffee)' : '2px solid transparent', flexShrink: 0 }}
+            />
           ))}
         </div>
       )}

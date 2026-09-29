@@ -1,7 +1,7 @@
 import { getArtworks } from '@/lib/db'
 import GalleryClient from '@/components/GalleryClient'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 export const metadata = {
   title: 'Full Gallery — Hala Baheyeldin Hozayen',

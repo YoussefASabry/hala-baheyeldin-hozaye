@@ -1,11 +1,12 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { getArtistProfile, getArtworks, getQna } from '@/lib/db'
 import ContactCard from '@/components/ContactCard'
 import MasonryGrid from '@/components/MasonryGrid'
 import QnaSection from '@/components/QnaSection'
 import { InstagramIcon, PhoneIcon, WhatsAppIcon } from '@/components/icons'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 const HERO_BTN_STYLE = {
   border: '1px solid rgba(255,255,255,0.6)',
@@ -28,7 +29,14 @@ export default async function HomePage() {
       {/* HERO */}
       <section className="hero-v2">
         <div className="hero-v2-media">
-          <img src="/assets/images/hero1.jpg" alt="" />
+          <Image
+            src="/assets/images/hero1.jpg"
+            alt=""
+            fill
+            priority
+            sizes="100vw"
+            style={{ objectFit: 'cover', objectPosition: 'center 35%' }}
+          />
         </div>
         <div className="container hero-v2-content">
           <h1 className="hero-v2-title">{profile?.name || 'Hala Baheyeldin Hozayen'}</h1>

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
+import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { getBrowserSupabase } from '@/lib/supabase'
 import { getAdminClient } from '@/lib/admin-client'
@@ -61,6 +62,8 @@ function ArtworksManager({ setError, setSuccess }) {
   const [edit, setEdit] = useState(null)
   const [busy, setBusy] = useState(false)
   const [dirty, setDirty] = useState(false)
+  const [numberingMode, setNumberingMode] = useState(false)
+  const [numberMap, setNumberMap] = useState({})
   const dragSrc = useRef(null)
 
   const load = async () => {
@@ -116,6 +119,41 @@ function ArtworksManager({ setError, setSuccess }) {
       setDirty(false)
     } catch (e) { setError(e.message) }
     setBusy(false)
+  }
+
+  const toggleNumberingMode = () => {
+    setNumberingMode((on) => !on)
+    setNumberMap({})
+  }
+
+  const handleNumberClick = (id) => {
+    setNumberMap((prev) => {
+      const next = { ...prev }
+      if (next[id]) {
+        const removed = next[id]
+        delete next[id]
+        Object.keys(next).forEach((k) => { if (next[k] > removed) next[k] -= 1 })
+      } else {
+        const used = Object.values(next)
+        next[id] = used.length ? Math.max(...used) + 1 : 1
+      }
+      return next
+    })
+  }
+
+  const saveNumbering = async () => {
+    if (Object.keys(numberMap).length !== items.length) return
+    setBusy(true)
+    try {
+      const ordered = [...items].sort((a, b) => numberMap[a.id] - numberMap[b.id])
+      const supabase = await getAdminClient()
+      await Promise.all(ordered.map((item, i) => supabase.from('artworks').update({ sort_order: i }).eq('id', item.id)))
+      setItems(ordered)
+      setSuccess('Order saved!')
+    } catch (e) { setError(e.message) }
+    setBusy(false)
+    setNumberingMode(false)
+    setNumberMap({})
   }
 
   const handleSave = async (form) => {
@@ -175,13 +213,30 @@ function ArtworksManager({ setError, setSuccess }) {
 
   return (
     <div>
-      <div style={{ display: 'flex', gap: 10, marginBottom: 20, flexWrap: 'wrap' }}>
-        <button className="btn btn-primary" onClick={() => setEdit({})} disabled={busy}>+ New Artwork</button>
-        <button className="btn btn-secondary" onClick={handleExport}>Export JSON</button>
-        {dirty && (
+      <div style={{ display: 'flex', gap: 10, marginBottom: 20, flexWrap: 'wrap', alignItems: 'center' }}>
+        <button className="btn btn-primary" onClick={() => setEdit({})} disabled={busy || numberingMode}>+ New Artwork</button>
+        <button className="btn btn-secondary" onClick={handleExport} disabled={numberingMode}>Export JSON</button>
+        <button className="btn btn-secondary" onClick={toggleNumberingMode} disabled={busy}>
+          {numberingMode ? 'Cancel Numbering' : 'Numbering Mode'}
+        </button>
+        {numberingMode && (
+          <>
+            <span style={{ fontSize: 12, color: 'var(--ink-soft)' }}>
+              Click artworks in order — {Object.keys(numberMap).length}/{items.length} numbered
+            </span>
+            <button
+              className="btn btn-primary"
+              onClick={saveNumbering}
+              disabled={busy || Object.keys(numberMap).length !== items.length}
+            >
+              {busy ? 'Saving...' : 'Save Numbered Order'}
+            </button>
+          </>
+        )}
+        {!numberingMode && dirty && (
           <button className="btn btn-primary" onClick={saveOrder} disabled={busy}>{busy ? 'Saving...' : 'Save Order'}</button>
         )}
-        {dirty && <span style={{ fontSize: 12, color: 'var(--ink-soft)', alignSelf: 'center' }}>Unsaved changes</span>}
+        {!numberingMode && dirty && <span style={{ fontSize: 12, color: 'var(--ink-soft)' }}>Unsaved changes</span>}
       </div>
 
       {edit && <ArtworkForm item={edit} usedMediums={usedMediums} onSave={handleSave} onCancel={() => setEdit(null)} busy={busy} />}
@@ -198,25 +253,45 @@ function ArtworksManager({ setError, setSuccess }) {
               <tr><td colSpan={8} style={{ padding: 12, fontSize: 12, color: 'var(--ink-soft)', fontStyle: 'italic' }}>No artworks yet.</td></tr>
             )}
             {items.map((a, i) => (
-              <tr key={a.id} draggable={!busy}
+              <tr key={a.id}
+                draggable={!busy && !numberingMode}
                 onDragStart={(e) => handleDragStart(e, i)}
                 onDragOver={handleDragOver}
                 onDrop={(e) => handleDrop(e, i)}
-                style={{ cursor: 'grab' }}
+                onClick={numberingMode ? () => handleNumberClick(a.id) : undefined}
+                style={{
+                  cursor: numberingMode ? 'pointer' : 'grab',
+                  background: numberingMode && numberMap[a.id] ? 'var(--surface-alt, rgba(0,0,0,0.03))' : undefined,
+                }}
               >
                 <td style={{ whiteSpace: 'nowrap' }}>
-                  <span style={{ cursor: 'grab', fontSize: 14, color: 'var(--ink-soft)', marginRight: 4 }}>&#x22EE;</span>
-                  <button disabled={busy} onClick={() => arrowUp(i)} style={arrowMini}>&#9650;</button>
-                  <button disabled={busy} onClick={() => arrowDown(i)} style={arrowMini}>&#9660;</button>
+                  {numberingMode ? (
+                    <span style={{
+                      display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                      width: 26, height: 26, borderRadius: '50%',
+                      background: numberMap[a.id] ? 'var(--accent)' : 'transparent',
+                      color: numberMap[a.id] ? '#fff' : 'var(--ink-soft)',
+                      border: numberMap[a.id] ? 'none' : '1px solid var(--line)',
+                      fontSize: 12, fontWeight: 600,
+                    }}>
+                      {numberMap[a.id] || ''}
+                    </span>
+                  ) : (
+                    <>
+                      <span style={{ cursor: 'grab', fontSize: 14, color: 'var(--ink-soft)', marginRight: 4 }}>&#x22EE;</span>
+                      <button disabled={busy} onClick={() => arrowUp(i)} style={arrowMini}>&#9650;</button>
+                      <button disabled={busy} onClick={() => arrowDown(i)} style={arrowMini}>&#9660;</button>
+                    </>
+                  )}
                 </td>
-                <td>{a.artwork_images?.[0]?.url ? <img src={a.artwork_images[0].url} alt="" style={{ width: 40, height: 40, objectFit: 'cover', borderRadius: 4 }} /> : '—'}</td>
+                <td>{a.artwork_images?.[0]?.url ? <Image src={a.artwork_images[0].url} alt="" width={56} height={56} style={{ width: 56, height: 56, objectFit: 'cover', borderRadius: 6 }} /> : '—'}</td>
                 <td style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{a.medium || '—'}</td>
                 <td style={{ fontSize: 12, color: 'var(--ink-soft)' }}>{a.length_in && a.width_in ? `${a.length_in} × ${a.width_in}` : '—'}</td>
                 <td>{a.status}</td>
                 <td>EGP {(a.price || 0).toLocaleString()}</td>
                 <td style={{ whiteSpace: 'nowrap' }}>
-                  <button className="btn btn-secondary" style={{ fontSize: 12, padding: '4px 12px', marginRight: 6 }} onClick={() => setEdit(a)}>Edit</button>
-                  <button className="btn btn-secondary" style={{ fontSize: 12, padding: '4px 12px', background: 'var(--accent-strong)', color: '#fff' }} onClick={() => handleDelete(a.id)} disabled={busy}>Delete</button>
+                  <button className="btn btn-secondary" style={{ fontSize: 12, padding: '4px 12px', marginRight: 6 }} disabled={numberingMode} onClick={(e) => { e.stopPropagation(); setEdit(a) }}>Edit</button>
+                  <button className="btn btn-secondary" style={{ fontSize: 12, padding: '4px 12px', background: 'var(--accent-strong)', color: '#fff' }} disabled={busy || numberingMode} onClick={(e) => { e.stopPropagation(); handleDelete(a.id) }}>Delete</button>
                 </td>
               </tr>
             ))}
@@ -327,7 +402,7 @@ function ArtworkForm({ item, usedMediums, onSave, onCancel, busy }) {
           <div className="admin-image-grid">
             {existingImages.map((img) => (
               <div key={img.id} className="admin-image-thumb">
-                <img src={img.url} alt="" style={{ border: img.is_primary ? '2px solid var(--accent)' : '2px solid transparent' }} />
+                <Image src={img.url} alt="" fill sizes="80px" style={{ objectFit: 'cover', border: img.is_primary ? '2px solid var(--accent)' : '2px solid transparent' }} />
                 {img.is_primary && <span style={{ position: 'absolute', top: 2, left: 2, fontSize: 9, background: 'var(--accent)', color: '#fff', padding: '1px 5px', borderRadius: 3 }}>PRIMARY</span>}
                 <div style={{ position: 'absolute', bottom: 2, right: 2, display: 'flex', gap: 2 }}>
                   {!img.is_primary && <button onClick={() => handleSetPrimary(img.id)} disabled={imageBusy} style={{ fontSize: 10, padding: '2px 5px', border: 'none', borderRadius: 3, background: 'var(--ink)', color: '#fff', cursor: 'pointer' }}>P</button>}

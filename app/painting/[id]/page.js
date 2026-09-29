@@ -4,7 +4,7 @@ import { notFound } from 'next/navigation'
 import ImageSlideshow from '@/components/ImageSlideshow'
 import WhatsAppBuyBox from '@/components/WhatsAppBuyBox'
 
-export const dynamic = 'force-dynamic'
+export const revalidate = 60
 
 const STATUS_LABELS = { available: 'AVAILABLE', reserved: 'RESERVED', sold: 'SOLD' }
 

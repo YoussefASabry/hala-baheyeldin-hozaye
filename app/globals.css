@@ -1329,3 +1329,21 @@ p { color: var(--ink); line-height: 1.8; }
 [data-version="3"] .detail-subtitle { color: var(--accent-2); }
 [data-version="3"] .painting-detail-image div { color: rgba(255,255,255,0.5); }
 [data-version="3"] .gallery-empty { color: rgba(255,255,255,0.6); }
+
+/* ============================================================
+   LOADING SKELETONS
+   ============================================================ */
+.skeleton {
+    background: linear-gradient(90deg, var(--line) 25%, rgba(0,0,0,0.07) 37%, var(--line) 63%);
+    background-size: 400% 100%;
+    animation: skeleton-pulse 1.4s ease infinite;
+    border-radius: 6px;
+}
+@keyframes skeleton-pulse {
+    0% { background-position: 100% 50%; }
+    100% { background-position: 0 50%; }
+}
+.skeleton-hero { width: 100%; aspect-ratio: 1091 / 726; min-height: 460px; max-height: 90vh; border-radius: 0; }
+.skeleton-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 28px; }
+.skeleton-card { width: 100%; aspect-ratio: 4 / 5; }
+.skeleton-line { height: 14px; margin-top: 10px; }
