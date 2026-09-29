@@ -42,8 +42,6 @@ export default function DevPaletteSwitcher() {
     window.localStorage.setItem('dev-version', id)
   }
 
-  if (process.env.NEXT_PUBLIC_ENABLE_PALETTE_SWITCHER !== 'true') return null
-
   return (
     <div className="dev-palette-switcher">
       <span className="label">Palette</span>
