@@ -1,0 +1,30 @@
+import './globals.css';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
+import DevPaletteSwitcher from '@/components/DevPaletteSwitcher';
+import { getArtistProfile } from '@/lib/db';
+
+export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://hala-baheyeldin-hozayen.com'),
+  title: 'Hala Baheyeldin Hozayen — Original Oil Paintings',
+  description: 'Original oil paintings, acrylics and mixed media for sale — visual artist Hala Baheyeldin Hozayen.',
+};
+
+export default async function RootLayout({ children }) {
+  const profile = await getArtistProfile().catch(() => null);
+
+  return (
+    <html lang="en" data-scroll-behavior="smooth">
+      <body suppressHydrationWarning>
+        <div className="wrapper">
+          <Navbar />
+          <div className="content-clip">
+            <main>{children}</main>
+            <Footer profile={profile} />
+          </div>
+        </div>
+        <DevPaletteSwitcher />
+      </body>
+    </html>
+  );
+}
