@@ -4,10 +4,26 @@ import Footer from '@/components/Footer';
 import DevPaletteSwitcher from '@/components/DevPaletteSwitcher';
 import { getArtistProfile } from '@/lib/db';
 
+const TITLE = 'Hala Baheyeldin Hozayen — Original Oil Paintings';
+const DESCRIPTION = 'Original oil paintings, acrylics and mixed media for sale — visual artist Hala Baheyeldin Hozayen.';
+
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://hala-baheyeldin-hozayen.com'),
-  title: 'Hala Baheyeldin Hozayen — Original Oil Paintings',
-  description: 'Original oil paintings, acrylics and mixed media for sale — visual artist Hala Baheyeldin Hozayen.',
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://hala-baheyeldin-hozayen.vercel.app'),
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    siteName: 'Hala Baheyeldin Hozayen',
+    type: 'website',
+    images: [{ url: '/icon.png', width: 512, height: 512, alt: 'Hala Baheyeldin Hozayen' }],
+  },
+  twitter: {
+    card: 'summary',
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ['/icon.png'],
+  },
 };
 
 export default async function RootLayout({ children }) {
