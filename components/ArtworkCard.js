@@ -40,7 +40,7 @@ export default function ArtworkCard({ artwork }) {
         </div>
       </div>
       <div className="frame-card-plaque">
-        <div className="frame-card-title">{label}</div>
+        {artwork.title && <div className="frame-card-title">{artwork.title}</div>}
         <div className="frame-card-meta">
           {[artwork.medium, artwork.size_cm].filter(Boolean).join(' · ')}
         </div>

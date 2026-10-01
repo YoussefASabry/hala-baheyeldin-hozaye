@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { WhatsAppIcon, ChatIcon, ShareIcon } from '@/components/icons'
 
 const WHATSAPP_NUMBER = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '201006632331'
 
@@ -49,14 +50,14 @@ export default function WhatsAppBuyBox({ artwork }) {
     if (artwork.status === 'reserved') {
       return <button disabled className="btn btn-secondary" style={{ opacity: 0.5, cursor: 'not-allowed' }}>Reserved</button>
     }
-    return <button className="btn btn-whatsapp" onClick={handleBuy}>Buy via WhatsApp</button>
+    return <button className="btn btn-whatsapp" onClick={handleBuy}><WhatsAppIcon size={16} /> Buy via WhatsApp</button>
   }
 
   return (
     <div className="detail-actions">
       {renderButton()}
-      <button onClick={handleInquire} className="btn btn-secondary">Inquire About This Artwork</button>
-      <button onClick={handleShare} className="btn btn-secondary">Share</button>
+      <button onClick={handleInquire} className="btn btn-secondary"><ChatIcon size={16} /> Inquire About This Artwork</button>
+      <button onClick={handleShare} className="btn btn-secondary"><ShareIcon size={16} /> Share</button>
       <Link href="/gallery" className="btn btn-secondary">Back to Gallery</Link>
     </div>
   )

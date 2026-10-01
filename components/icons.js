@@ -16,6 +16,26 @@ export function PhoneIcon({ size = 20 }) {
   )
 }
 
+export function ShareIcon({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <circle cx="18" cy="5" r="2.6" />
+      <circle cx="6" cy="12" r="2.6" />
+      <circle cx="18" cy="19" r="2.6" />
+      <path d="M8.3 10.7l7.4-4.2M8.3 13.3l7.4 4.2" />
+    </svg>
+  )
+}
+
+export function ChatIcon({ size = 20 }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M3 5.5c0-1.1.9-2 2-2h14c1.1 0 2 .9 2 2v9c0 1.1-.9 2-2 2H9l-5 4v-4H5c-1.1 0-2-.9-2-2v-9z" />
+      <path d="M8 9h8M8 13h5" />
+    </svg>
+  )
+}
+
 export function WhatsAppIcon({ size = 20 }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor">
