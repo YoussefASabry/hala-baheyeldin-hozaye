@@ -1,13 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Jost:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Cairo:wght@400;600;700;900&display=swap');
 
 /* ============================================================
-   PALETTES — 4 variable sets, switched via [data-palette] on <html>.
-   Every palette defines the same semantic tokens so the rest of the
-   stylesheet never references a literal color.
+   COLOR PALETTE — Seashell / Midnight Violet / French Blue
    ============================================================ */
 
-:root,
-[data-palette="1"] {
+:root {
     --bg: #FFF4EB;         /* Seashell */
     --bg-alt: #3D1534;     /* Midnight Violet */
     --surface: #FFFFFF;
@@ -19,78 +16,6 @@
     --on-bg-alt: #F6E0B6;  /* Wheat, for text on the dark section */
     --line: #ecd9e3;
     --sold: #8a8f9c;
-}
-
-[data-palette="2"] {
-    --bg: #F6FFEA;         /* Honeydew */
-    --bg-alt: #1c4650;     /* deep teal, derived from Sky Blue for contrast */
-    --surface: #FFFFFF;
-    --ink: #2b1c14;
-    --ink-soft: #5c4d3e;
-    --accent: #C93638;     /* Tomato Jam */
-    --accent-strong: #8e2224;
-    --accent-2: #FA855A;   /* Coral Glow */
-    --on-bg-alt: #FFDE96;  /* Soft Peach */
-    --line: #ffe3c2;
-    --sold: #9a9086;
-}
-
-[data-palette="3"] {
-    --bg: #F4F1DE;         /* Warm Ivory */
-    --bg-alt: #0F2E23;     /* Deep Pine Green */
-    --surface: #FFFFFF;
-    --ink: #0F2E23;        /* Deep Pine Green */
-    --ink-soft: #3c4c37;
-    --accent: #1B5B65;     /* Deep Teal */
-    --accent-strong: #123c43;
-    --accent-2: #C88582;   /* Dusty Rose */
-    --on-bg-alt: #cfe0c9;
-    --line: #dcd6b8;
-    --sold: #9aa08f;
-}
-
-[data-palette="4"] {
-    --bg: #FFF3B0;         /* Vanilla */
-    --bg-alt: #335C67;     /* Dark Slate Gray */
-    --surface: #FFFFFF;
-    --ink: #3a2a10;
-    --ink-soft: #5c4c2e;
-    --accent: #9E2A2B;     /* Auburn */
-    --accent-strong: #6e1c1d;
-    --accent-2: #E09F3E;   /* Hunyadi Yellow */
-    --on-bg-alt: #FFF3B0;
-    --line: #f0dfa0;
-    --sold: #a89b7a;
-}
-
-/* Mixed palette — Warm Ivory (P3) + French Blue (P1) + Hunyadi Yellow (P4) */
-[data-palette="5"] {
-    --bg: #F4F1DE;
-    --bg-alt: #262f59;
-    --surface: #FFFFFF;
-    --ink: #262f59;
-    --ink-soft: #4a4f70;
-    --accent: #1B5B65;
-    --accent-strong: #123c43;
-    --accent-2: #E09F3E;
-    --on-bg-alt: #F4F1DE;
-    --line: #e3ddc0;
-    --sold: #9aa08f;
-}
-
-/* Mixed palette — Honeydew (P2) + Deep Pine (P3) + Auburn (P4) */
-[data-palette="6"] {
-    --bg: #F6FFEA;
-    --bg-alt: #0F2E23;
-    --surface: #FFFFFF;
-    --ink: #0F2E23;
-    --ink-soft: #3f5a45;
-    --accent: #9E2A2B;
-    --accent-strong: #6e1c1d;
-    --accent-2: #FA855A;
-    --on-bg-alt: #FFDE96;
-    --line: #dce8c8;
-    --sold: #9aa08f;
 }
 
 /* Legacy alias tokens — kept so shared components (admin, contact cards,
@@ -1119,43 +1044,6 @@ p { color: var(--ink); line-height: 1.8; }
 .footer-copyright { text-align: center; }
 
 @media (max-width: 640px) { .footer-grid { flex-direction: column; text-align: center; justify-content: center; } }
-
-/* ============================================================
-   DEV PALETTE SWITCHER (not a public feature — see NEXT_PUBLIC_ENABLE_PALETTE_SWITCHER)
-   ============================================================ */
-.dev-palette-switcher {
-    position: fixed;
-    bottom: 18px;
-    left: 18px;
-    z-index: 999;
-    background: rgba(20,20,20,0.9);
-    border-radius: 999px;
-    padding: 8px 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 6px 24px rgba(0,0,0,0.3);
-}
-
-.dev-palette-switcher span.label {
-    font-family: 'Jost', sans-serif;
-    font-size: 10px;
-    color: #fff;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-right: 2px;
-}
-
-.dev-palette-switcher button {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.3);
-    cursor: pointer;
-    padding: 0;
-}
-
-.dev-palette-switcher button.active { border-color: #fff; }
 
 /* ============================================================
    PAINTING DETAIL

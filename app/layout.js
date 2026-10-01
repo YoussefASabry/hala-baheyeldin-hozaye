@@ -1,7 +1,6 @@
 import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import DevPaletteSwitcher from '@/components/DevPaletteSwitcher';
 import { getArtistProfile } from '@/lib/db';
 
 const TITLE = 'Hala Baheyeldin Hozayen — Original Oil Paintings';
@@ -39,7 +38,6 @@ export default async function RootLayout({ children }) {
             <Footer profile={profile} />
           </div>
         </div>
-        <DevPaletteSwitcher />
       </body>
     </html>
   );
