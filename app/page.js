@@ -80,10 +80,6 @@ export default async function HomePage() {
           <div className="about-layout">
             <div className="about-portrait">
               <div className="portrait-frame">
-                <span className="portrait-frame-ornament tl" />
-                <span className="portrait-frame-ornament tr" />
-                <span className="portrait-frame-ornament bl" />
-                <span className="portrait-frame-ornament br" />
                 <div className="portrait-frame-img-wrap">
                   <Image
                     src="/assets/images/hala.jpg"

@@ -877,14 +877,12 @@ p { color: var(--ink); line-height: 1.8; }
     width: 100%;
     max-width: 300px;
     aspect-ratio: 2045 / 3000;
-    padding: 16px;
-    background: var(--surface);
-    border-radius: 2px;
+    border: 10px solid #D4AF37;
+    border-radius: 3px;
     box-shadow:
-        0 0 0 1.5px #c9a227,
-        0 0 0 3px var(--surface),
-        0 0 0 4.5px rgba(201,162,39,0.55),
-        0 24px 54px rgba(0,0,0,0.5);
+        inset 0 0 0 2px #B8860B,
+        0 0 0 2px #B8860B,
+        0 16px 36px rgba(0,0,0,0.4);
 }
 
 .portrait-frame-img-wrap {
@@ -892,22 +890,7 @@ p { color: var(--ink); line-height: 1.8; }
     width: 100%;
     height: 100%;
     overflow: hidden;
-    box-shadow: 0 0 0 1.5px #c9a227, inset 0 0 18px rgba(0,0,0,0.4);
 }
-
-.portrait-frame-ornament {
-    position: absolute;
-    width: 9px;
-    height: 9px;
-    background: linear-gradient(135deg, #f8ecc0 0%, #d4af37 55%, #8a6a1f 100%);
-    transform: rotate(45deg);
-    box-shadow: 0 0 0 1px #8a6a1f, 0 2px 4px rgba(0,0,0,0.4);
-    z-index: 3;
-}
-.portrait-frame-ornament.tl { top: -4.5px; left: -4.5px; }
-.portrait-frame-ornament.tr { top: -4.5px; right: -4.5px; }
-.portrait-frame-ornament.bl { bottom: -4.5px; left: -4.5px; }
-.portrait-frame-ornament.br { bottom: -4.5px; right: -4.5px; }
 
 .portrait-caption {
     text-align: center;
@@ -931,14 +914,14 @@ p { color: var(--ink); line-height: 1.8; }
 }
 
 .portrait-group-link {
-    color: var(--accent);
+    color: inherit;
     font-weight: 700;
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;
     transition: var(--transition);
 }
-.portrait-group-link:hover { color: var(--on-bg-alt); text-decoration-thickness: 2px; }
+.portrait-group-link:hover { color: var(--accent); text-decoration-thickness: 2px; }
 
 @media (max-width: 860px) {
     .about-layout { grid-template-columns: 1fr; gap: 40px; }
