@@ -78,11 +78,12 @@ export default async function HomePage() {
             <h2>About Me</h2>
           </div>
           <div className="about-layout">
-            <div className="about-qna">
-              <QnaSection items={qna} />
-            </div>
             <div className="about-portrait">
               <div className="portrait-frame">
+                <span className="portrait-frame-ornament tl" />
+                <span className="portrait-frame-ornament tr" />
+                <span className="portrait-frame-ornament bl" />
+                <span className="portrait-frame-ornament br" />
                 <div className="portrait-frame-img-wrap">
                   <Image
                     src="/assets/images/hala.jpg"
@@ -104,6 +105,9 @@ export default async function HomePage() {
                   )}
                 </p>
               </div>
+            </div>
+            <div className="about-qna">
+              <QnaSection items={qna} />
             </div>
           </div>
         </div>
