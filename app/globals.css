@@ -877,15 +877,14 @@ p { color: var(--ink); line-height: 1.8; }
     width: 100%;
     max-width: 300px;
     aspect-ratio: 2045 / 3000;
-    padding: 22px;
-    background: linear-gradient(135deg, #f9e58b 0%, #d4af37 35%, #8a6a1f 55%, #d4af37 75%, #f9e58b 100%);
+    padding: 16px;
+    background: var(--surface);
+    border-radius: 2px;
     box-shadow:
-        inset 0 0 0 2px #fff6d1,
-        inset 0 0 0 5px #a9790f,
-        inset 0 0 0 7px #f3dc8a,
-        inset 0 0 0 9px #6b4e0e,
-        0 0 0 2px #2b1d05,
-        0 26px 60px rgba(0,0,0,0.55);
+        0 0 0 1.5px #c9a227,
+        0 0 0 3px var(--surface),
+        0 0 0 4.5px rgba(201,162,39,0.55),
+        0 24px 54px rgba(0,0,0,0.5);
 }
 
 .portrait-frame-img-wrap {
@@ -893,26 +892,22 @@ p { color: var(--ink); line-height: 1.8; }
     width: 100%;
     height: 100%;
     overflow: hidden;
-    box-shadow: inset 0 0 0 2px #2b1d05, inset 0 0 16px rgba(0,0,0,0.5);
+    box-shadow: 0 0 0 1.5px #c9a227, inset 0 0 18px rgba(0,0,0,0.4);
 }
 
 .portrait-frame-ornament {
     position: absolute;
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 32% 28%, #fffbe6 0%, #f3dc8a 25%, #c9a227 50%, #8a6a1f 75%, #5c4509 100%);
-    box-shadow:
-        0 0 0 2px #2b1d05,
-        0 0 0 4px #d4af37,
-        0 3px 6px rgba(0,0,0,0.6),
-        inset 0 1px 2px rgba(255,255,255,0.8);
+    width: 9px;
+    height: 9px;
+    background: linear-gradient(135deg, #f8ecc0 0%, #d4af37 55%, #8a6a1f 100%);
+    transform: rotate(45deg);
+    box-shadow: 0 0 0 1px #8a6a1f, 0 2px 4px rgba(0,0,0,0.4);
     z-index: 3;
 }
-.portrait-frame-ornament.tl { top: -2px; left: -2px; }
-.portrait-frame-ornament.tr { top: -2px; right: -2px; }
-.portrait-frame-ornament.bl { bottom: -2px; left: -2px; }
-.portrait-frame-ornament.br { bottom: -2px; right: -2px; }
+.portrait-frame-ornament.tl { top: -4.5px; left: -4.5px; }
+.portrait-frame-ornament.tr { top: -4.5px; right: -4.5px; }
+.portrait-frame-ornament.bl { bottom: -4.5px; left: -4.5px; }
+.portrait-frame-ornament.br { bottom: -4.5px; right: -4.5px; }
 
 .portrait-caption {
     text-align: center;
