@@ -877,12 +877,11 @@ p { color: var(--ink); line-height: 1.8; }
     width: 100%;
     max-width: 300px;
     aspect-ratio: 2045 / 3000;
-    border: 10px solid #D4AF37;
-    border-radius: 3px;
     box-shadow:
-        inset 0 0 0 2px #B8860B,
-        0 0 0 2px #B8860B,
-        0 16px 36px rgba(0,0,0,0.4);
+        0 0 0 1.5px #D4AF37,
+        0 0 0 6px var(--bg-alt),
+        0 0 0 7.5px #D4AF37,
+        0 20px 46px rgba(0,0,0,0.45);
 }
 
 .portrait-frame-img-wrap {
