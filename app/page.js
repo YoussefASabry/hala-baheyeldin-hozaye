@@ -43,7 +43,7 @@ export default async function HomePage() {
           <p className="hero-v2-sub">Visual Artist — <span className="hero-v2-sub-ar" dir="rtl">فنانة تشكيلية</span></p>
           <div className="hero-v2-cta">
             <a href="#collection" className="btn" style={HERO_BTN_STYLE}>View Collection</a>
-            <a href="#qna" className="btn" style={HERO_BTN_STYLE}>Q &amp; A</a>
+            <a href="#about" className="btn" style={HERO_BTN_STYLE}>About</a>
             <a href="#contacts" className="btn" style={{ ...HERO_BTN_STYLE, display: 'inline-flex', alignItems: 'center', gap: 8 }}><PhoneIcon size={14} /> Contact</a>
           </div>
         </div>
@@ -71,14 +71,41 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {/* Q & A */}
-      <section id="qna" className="section-dark">
+      {/* ABOUT ME */}
+      <section id="about" className="section-dark">
         <div className="container">
           <div className="section-header">
-            <span className="section-kicker">In Her Words</span>
-            <h2>Questions &amp; Answers</h2>
+            <h2>About Me</h2>
           </div>
-          <QnaSection items={qna} />
+          <div className="about-layout">
+            <div className="about-qna">
+              <QnaSection items={qna} />
+            </div>
+            <div className="about-portrait">
+              <div className="portrait-frame">
+                <div className="portrait-frame-img-wrap">
+                  <Image
+                    src="/assets/images/hala.jpg"
+                    alt={profile?.name || 'Hala Hozayen'}
+                    fill
+                    sizes="(max-width: 860px) 280px, 320px"
+                    style={{ objectFit: 'cover' }}
+                  />
+                </div>
+              </div>
+              <div className="portrait-caption">
+                <p className="portrait-name" dir="rtl">هالة حزين</p>
+                <p className="portrait-role" dir="rtl">
+                  فنانة تشكيلية بجروب{' '}
+                  {profile?.group_url ? (
+                    <a href={profile.group_url} target="_blank" rel="noopener noreferrer" className="portrait-group-link">نون للفنون</a>
+                  ) : (
+                    <span>نون للفنون</span>
+                  )}
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

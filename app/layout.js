@@ -7,7 +7,7 @@ const TITLE = 'Hala Baheyeldin Hozayen — Original Oil Paintings';
 const DESCRIPTION = 'Original oil paintings, acrylics and mixed media for sale — visual artist Hala Baheyeldin Hozayen.';
 
 export const metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://hala-baheyeldin-hozayen.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://hala-hozayen.vercel.app'),
   title: TITLE,
   description: DESCRIPTION,
   openGraph: {

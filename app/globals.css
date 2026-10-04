@@ -855,6 +855,91 @@ p { color: var(--ink); line-height: 1.8; }
 .qna-a-en { font-family: 'Jost', sans-serif; font-size: 13.5px; color: var(--on-bg-alt); opacity: 0.55; line-height: 1.75; text-align: left; align-self: flex-start; }
 
 /* ============================================================
+   ABOUT ME — Q&A column + portrait column
+   ============================================================ */
+.about-layout {
+    display: grid;
+    grid-template-columns: 1fr 300px;
+    gap: 56px;
+    align-items: start;
+}
+
+.about-portrait {
+    position: sticky;
+    top: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.portrait-frame {
+    position: relative;
+    width: 100%;
+    max-width: 300px;
+    aspect-ratio: 2045 / 3000;
+    padding: 12px;
+    background: var(--surface);
+    border-radius: 6px;
+    box-shadow: 0 18px 44px rgba(0,0,0,0.4);
+}
+
+.portrait-frame::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid var(--accent-2);
+    border-radius: 3px;
+    opacity: 0.55;
+    pointer-events: none;
+    z-index: 2;
+}
+
+.portrait-frame-img-wrap {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.portrait-caption {
+    text-align: center;
+    margin-top: 22px;
+}
+
+.portrait-name {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 22px;
+    color: var(--on-bg-alt);
+    margin-bottom: 6px;
+}
+
+.portrait-role {
+    font-family: 'Cairo', sans-serif;
+    font-size: 14px;
+    color: var(--on-bg-alt);
+    opacity: 0.8;
+    line-height: 1.7;
+}
+
+.portrait-group-link {
+    color: var(--accent-2);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: var(--transition);
+}
+.portrait-group-link:hover { color: var(--on-bg-alt); text-decoration-thickness: 2px; }
+
+@media (max-width: 860px) {
+    .about-layout { grid-template-columns: 1fr; gap: 40px; }
+    .about-portrait { position: static; order: -1; }
+    .portrait-frame { max-width: 220px; }
+}
+
+/* ============================================================
    ARTWORK CARDS ON PREVIEW (reuses frame-card in a masonry column flow)
    ============================================================ */
 

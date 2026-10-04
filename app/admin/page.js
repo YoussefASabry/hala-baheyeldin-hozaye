@@ -436,7 +436,7 @@ function ArtworkForm({ item, usedMediums, onSave, onCancel, busy }) {
 
 /* ─── Profile ─── */
 function ProfileManager({ setError, setSuccess }) {
-  const [form, setForm] = useState({ name: '', contact_email: '', contact_phone: '', whatsapp_number: '', instagram_url: '', tiktok_url: '' })
+  const [form, setForm] = useState({ name: '', contact_email: '', contact_phone: '', whatsapp_number: '', instagram_url: '', tiktok_url: '', group_url: '' })
   const [busy, setBusy] = useState(false)
 
   useEffect(() => {
@@ -495,6 +495,10 @@ function ProfileManager({ setError, setSuccess }) {
         <div className="admin-field">
           <label>TikTok URL</label>
           <input placeholder="https://tiktok.com/..." value={form.tiktok_url} onChange={(e) => setForm({ ...form, tiktok_url: e.target.value })} />
+        </div>
+        <div className="admin-field full">
+          <label>نون للفنون Group URL (link used in the About Me section)</label>
+          <input placeholder="https://..." value={form.group_url} onChange={(e) => setForm({ ...form, group_url: e.target.value })} />
         </div>
       </div>
       <button className="btn btn-primary" onClick={handleSave} disabled={busy} style={{ marginTop: 16 }}>{busy ? 'Saving...' : 'Save Profile'}</button>

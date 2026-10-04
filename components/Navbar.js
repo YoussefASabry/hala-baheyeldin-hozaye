@@ -9,7 +9,7 @@ import { InstagramIcon } from '@/components/icons';
 const NAV_ITEMS = [
   { label: 'Home', href: '/' },
   { label: 'Collection', href: '/#collection' },
-  { label: 'Q & A', href: '/#qna' },
+  { label: 'About', href: '/#about' },
   { label: 'Full Gallery', href: '/gallery' },
   { label: 'Contact', href: '/#contacts' },
 ];
