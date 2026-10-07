@@ -765,103 +765,45 @@ p { color: var(--ink); line-height: 1.8; }
 }
 
 /* ============================================================
-   Q&A SECTION — accordion, native <details>/<summary>
+   ARTIST QUOTE — statement block
    ============================================================ */
-.qna-list {
-    display: grid;
-    gap: 12px;
-    max-width: 780px;
-    margin: 0 auto;
+.artist-quote {
+    position: relative;
+    max-width: 640px;
+    padding: 8px 8px 8px 56px;
 }
 
-.qna-item {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 14px;
-    transition: background 0.2s ease, border-color 0.2s ease;
-}
-.qna-item[open],
-.qna-item:hover {
-    background: rgba(255,255,255,0.065);
-    border-color: rgba(255,255,255,0.18);
-}
-
-.qna-summary {
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-start;
-    gap: 16px;
-    padding: 22px 24px;
-    cursor: pointer;
-    list-style: none;
-}
-.qna-summary::-webkit-details-marker { display: none; }
-
-.qna-num {
+.artist-quote-mark {
+    position: absolute;
+    top: -36px;
+    right: 0;
     font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 140px;
+    line-height: 1;
     color: var(--accent-2);
-    opacity: 0.75;
-    flex-shrink: 0;
-    padding-top: 3px;
+    opacity: 0.35;
+    pointer-events: none;
+    user-select: none;
 }
 
-.qna-summary-text { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-end; gap: 6px; }
-
-.qna-q-ar {
+.artist-quote-text {
+    position: relative;
     font-family: 'Cairo', sans-serif;
-    font-weight: 700;
-    font-size: 21px;
-    line-height: 1.5;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 2;
     color: var(--on-bg-alt);
     text-align: right;
 }
 
-.qna-q-en {
-    font-family: 'Jost', sans-serif;
-    font-style: normal;
-    font-size: 13px;
-    letter-spacing: 0.2px;
-    font-weight: 500;
-    color: var(--on-bg-alt);
-    opacity: 0.55;
-    text-align: left;
-    align-self: flex-start;
-}
-
-.qna-toggle-icon {
-    flex-shrink: 0;
-    width: 22px;
-    height: 22px;
-    position: relative;
-    margin-top: 2px;
-}
-.qna-toggle-icon::before,
-.qna-toggle-icon::after {
-    content: '';
-    position: absolute;
-    top: 50%; left: 50%;
-    background: var(--accent-2);
-    transform: translate(-50%, -50%);
-    transition: transform 0.25s ease;
-}
-.qna-toggle-icon::before { width: 14px; height: 2px; }
-.qna-toggle-icon::after { width: 2px; height: 14px; }
-.qna-item[open] .qna-toggle-icon::after { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
-
-.qna-body { padding: 0 24px 24px; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-.qna-a-ar { font-family: 'Cairo', sans-serif; font-size: 15px; color: var(--on-bg-alt); opacity: 0.85; line-height: 1.9; text-align: right; }
-.qna-a-en { font-family: 'Jost', sans-serif; font-size: 13.5px; color: var(--on-bg-alt); opacity: 0.55; line-height: 1.75; text-align: left; align-self: flex-start; }
-
 /* ============================================================
-   ABOUT ME — Q&A column + portrait column
+   ABOUT ME — quote column + portrait column
    ============================================================ */
 .about-layout {
     display: grid;
     grid-template-columns: 300px 1fr;
     gap: 56px;
-    align-items: start;
+    align-items: center;
 }
 
 .about-portrait {
@@ -926,6 +868,9 @@ p { color: var(--ink); line-height: 1.8; }
     .about-layout { grid-template-columns: 1fr; gap: 40px; }
     .about-portrait { position: static; }
     .portrait-frame { max-width: 220px; }
+    .artist-quote { padding: 8px 8px 8px 32px; }
+    .artist-quote-mark { font-size: 90px; top: -22px; }
+    .artist-quote-text { font-size: 19px; line-height: 1.9; }
 }
 
 /* ============================================================
@@ -1236,8 +1181,6 @@ p { color: var(--ink); line-height: 1.8; }
     .contact-item { padding: 12px; }
     .contact-item .contact-icon { font-size: 22px; margin-bottom: 6px; }
     .contact-item .contact-value { font-size: 12px; }
-    .qna-summary { padding: 18px 16px; gap: 12px; }
-    .qna-body { padding: 0 16px 20px; }
 }
 
 /* ============================================================
@@ -1269,11 +1212,8 @@ p { color: var(--ink); line-height: 1.8; }
 [data-version="2"] .footer-grid { border-bottom-color: var(--line); }
 [data-version="2"] .footer-social a { border-color: var(--line); color: var(--ink); }
 [data-version="2"] .site-nav { border-bottom: 2px solid var(--ink); }
-[data-version="2"] .qna-item { background: rgba(0,0,0,0.025); border-color: var(--line); }
-[data-version="2"] .qna-item[open], [data-version="2"] .qna-item:hover { background: rgba(0,0,0,0.045); border-color: var(--line); }
-[data-version="2"] .qna-num, [data-version="2"] .qna-q-en, [data-version="2"] .qna-a-en { color: var(--ink); }
-[data-version="2"] .qna-q-ar, [data-version="2"] .qna-a-ar { color: var(--ink); opacity: 0.8; }
-[data-version="2"] .qna-toggle-icon::before, [data-version="2"] .qna-toggle-icon::after { background: var(--accent); }
+[data-version="2"] .artist-quote-text { color: var(--ink); }
+[data-version="2"] .artist-quote-mark { color: var(--accent); }
 [data-version="2"] .section-header h2::after { max-width: 120px; }
 
 /* V3 — "Bold Ink": the whole page is one dark surface, no banding
@@ -1300,7 +1240,6 @@ p { color: var(--ink); line-height: 1.8; }
 [data-version="3"] .frame-card-img { background: rgba(255,255,255,0.06); }
 [data-version="3"] .frame-card-title { color: var(--bg); }
 [data-version="3"] .frame-card-meta { color: rgba(255,255,255,0.6); }
-[data-version="3"] .qna-item { border-color: rgba(255,255,255,0.15); }
 [data-version="3"] .contact-item { background: rgba(255,255,255,0.04); border-color: rgba(255,255,255,0.15); }
 [data-version="3"] .contact-item .contact-value { color: var(--accent-2); }
 [data-version="3"] .contact-item .contact-label { color: rgba(255,255,255,0.55); }

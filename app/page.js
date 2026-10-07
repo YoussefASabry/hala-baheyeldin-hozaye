@@ -1,10 +1,11 @@
 import Link from 'next/link'
 import Image from 'next/image'
-import { getArtistProfile, getArtworks, getQna } from '@/lib/db'
+import { getArtistProfile, getArtworks } from '@/lib/db'
 import ContactCard from '@/components/ContactCard'
 import MasonryGrid from '@/components/MasonryGrid'
-import QnaSection from '@/components/QnaSection'
 import { InstagramIcon, PhoneIcon, WhatsAppIcon } from '@/components/icons'
+
+const ARTIST_QUOTE = 'أجد في الفن ملاذاً روحياً للتعبير عما يدور بداخلي والتحرر من أعباء الحياة. تتشكل لوحاتي كمرآة صادقة لشخصيتي ومزاجي لحظة الإبداع، إيماناً مني بأن الصدق الشعوري هو جوهر النجاح الفني. وبفضل هذا الارتباط التلقائي بين مشاعري والفرشاة، اكتسبت أعمالي أسلوباً وبصمة خاصة تجعلها واضحة ومميزة لكل من يشاهدها.'
 
 export const revalidate = 60
 
@@ -16,10 +17,9 @@ const HERO_BTN_STYLE = {
 }
 
 export default async function HomePage() {
-  const [profile, artworks, qna] = await Promise.all([
+  const [profile, artworks] = await Promise.all([
     getArtistProfile(),
     getArtworks(),
-    getQna(),
   ])
 
   const preview = artworks.slice(0, 4)
@@ -103,7 +103,10 @@ export default async function HomePage() {
               </div>
             </div>
             <div className="about-qna">
-              <QnaSection items={qna} />
+              <blockquote className="artist-quote">
+                <span className="artist-quote-mark" aria-hidden="true">&rdquo;</span>
+                <p className="artist-quote-text" dir="rtl">{ARTIST_QUOTE}</p>
+              </blockquote>
             </div>
           </div>
         </div>
