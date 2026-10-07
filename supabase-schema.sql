@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS artist_profile (
   instagram_url TEXT DEFAULT '',
   tiktok_url TEXT DEFAULT '',
   group_url TEXT DEFAULT '', -- link for the "نون للفنون" group credit in the About Me section
+  about_quote TEXT DEFAULT '', -- artist statement shown in the About Me section
   created_at TIMESTAMPTZ DEFAULT now(),
   updated_at TIMESTAMPTZ DEFAULT now()
 );

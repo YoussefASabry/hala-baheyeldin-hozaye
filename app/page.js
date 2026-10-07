@@ -104,8 +104,9 @@ export default async function HomePage() {
             </div>
             <div className="about-qna">
               <blockquote className="artist-quote">
-                <span className="artist-quote-mark" aria-hidden="true">&rdquo;</span>
-                <p className="artist-quote-text" dir="rtl">{ARTIST_QUOTE}</p>
+                <span className="artist-quote-mark open" aria-hidden="true">&rdquo;</span>
+                <p className="artist-quote-text" dir="rtl">{profile?.about_quote || ARTIST_QUOTE}</p>
+                <span className="artist-quote-mark close" aria-hidden="true">&rdquo;</span>
               </blockquote>
             </div>
           </div>
