@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { getBrowserSupabase } from '@/lib/supabase'
 import { getAdminClient } from '@/lib/admin-client'
+import StudioLinkCard from '@/components/StudioLinkCard'
 import { buildArtworkPayload, imageFilePath, mediumOptions as buildMediumOptions } from '@/lib/artworks-core'
 
 const TABS = ['Artworks', 'Profile', 'Q & A']
@@ -34,6 +35,7 @@ export default function AdminPage() {
         </div>
 
         {error && <div style={{ background: '#fef2f2', color: '#b91c1c', padding: '10px 16px', borderRadius: 8, marginBottom: 20, fontSize: 14 }}>{error}</div>}
+        <StudioLinkCard />
         {success && <div style={{ background: '#f0fdf4', color: '#166534', padding: '10px 16px', borderRadius: 8, marginBottom: 20, fontSize: 14 }}>{success}</div>}
 
         <div style={{ display: 'flex', gap: 8, marginBottom: 30, flexWrap: 'wrap', borderBottom: '1px solid var(--line)', paddingBottom: 12 }}>

@@ -18,15 +18,14 @@ function SetupForm() {
   useEffect(() => {
     if (!token) return
     ;(async () => {
-      const supabase = getBrowserSupabase()
-      const { data, error } = await supabase
-        .from('admin_invites')
-        .select('used_at, expires_at')
-        .eq('token', token)
-        .is('used_at', null)
-        .maybeSingle()
+      const res = await fetch('/api/admin-invite-check', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+      }).catch(() => null)
+      const data = res ? await res.json().catch(() => null) : null
       setBusy(false)
-      if (error || !data || (data.expires_at && new Date(data.expires_at) < new Date())) {
+      if (!data?.valid) {
         setStep('invalid')
         setError('This invite link is invalid, already used, or expired.')
         return

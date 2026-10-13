@@ -5,6 +5,8 @@
 -- the public anon key (it ships in the browser bundle) could edit or wipe
 -- paintings, profile and Q&A, and upload any file to the bucket.
 --
+-- Deploy the matching code (commit with /api/admin-invite-check) BEFORE running.
+--
 -- After this file:
 --   * public (anon)          -> read only
 --   * logged-in /admin user  -> full access (old admin keeps working)
@@ -50,10 +52,12 @@ DROP POLICY IF EXISTS "Admin delete artworks" ON storage.objects;
 CREATE POLICY "Admin delete artworks" ON storage.objects
   FOR DELETE TO authenticated USING (bucket_id = 'artworks');
 
--- ---------- NOT covered here: admin_invites ----------
--- Still open to anon (policy "admin invites open access"), because
--- /admin/setup validates the invite token from the browser with the anon key.
--- That means anyone with the anon key can list or insert invite tokens and
--- then create an admin account through /api/admin-signup.
--- Fix needs a small code change (validate the token via a server route),
--- then: ALTER TABLE admin_invites ENABLE ROW LEVEL SECURITY; and drop that policy.
+-- ---------- admin_invites ----------
+-- /admin/setup now checks invites through /api/admin-invite-check (service
+-- role), and /admin/invite runs as the logged-in admin, so the public needs
+-- no access to this table at all.
+ALTER TABLE admin_invites ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "admin invites open access" ON admin_invites;
+DROP POLICY IF EXISTS "admin manage invites" ON admin_invites;
+CREATE POLICY "admin manage invites" ON admin_invites
+  FOR ALL TO authenticated USING (true) WITH CHECK (true);
