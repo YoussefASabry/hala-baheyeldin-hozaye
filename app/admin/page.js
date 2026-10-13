@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { getBrowserSupabase } from '@/lib/supabase'
 import { getAdminClient } from '@/lib/admin-client'
+import { buildArtworkPayload, imageFilePath, mediumOptions as buildMediumOptions } from '@/lib/artworks-core'
 
 const TABS = ['Artworks', 'Profile', 'Q & A']
 
@@ -58,7 +59,6 @@ const arrowMini = {
 }
 
 const STATUS_OPTIONS = ['available', 'reserved', 'sold']
-const DEFAULT_MEDIUMS = ['Oil on canvas', 'Acrylic on canvas', 'Mixed media', 'Watercolor', 'Charcoal', 'Pastel', 'Ink']
 
 /* ─── Artworks (flat, admin-orderable, no collections) ─── */
 function ArtworksManager({ setError, setSuccess }) {
@@ -166,16 +166,8 @@ function ArtworksManager({ setError, setSuccess }) {
     setBusy(true); setError(''); setSuccess('')
     try {
       const supabase = await getAdminClient()
-      const artworkId = form.id || (crypto.randomUUID?.() || 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => { const r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 0x3) | 0x8).toString(16) }))
-      const payload = {
-        id: artworkId, title: form.title || '', year: form.year || '', medium: form.medium,
-        length_in: form.length_cm ? +(form.length_cm / 2.54).toFixed(2) : null,
-        width_in: form.width_cm ? +(form.width_cm / 2.54).toFixed(2) : null,
-        description: form.description, price: form.price || 0,
-        status: form.status || 'available',
-        is_published: form.is_published !== undefined ? form.is_published : true,
-        sort_order: form.sort_order ?? items.length,
-      }
+      const payload = buildArtworkPayload(form, items.length)
+      const artworkId = payload.id
       const { error } = await supabase.from('artworks').upsert(payload)
       if (error) throw error
 
@@ -183,8 +175,7 @@ function ArtworksManager({ setError, setSuccess }) {
         const { count } = await supabase.from('artwork_images').select('*', { count: 'exact', head: true }).eq('artwork_id', artworkId)
         for (let i = 0; i < form.files.length; i++) {
           const file = form.files[i]
-          const ext = file.name.split('.').pop()
-          const filePath = `artwork_${Date.now()}_${Math.random().toString(36).slice(2, 6)}.${ext}`
+          const filePath = imageFilePath(file.name.split('.').pop())
           const { error: uploadErr } = await supabase.storage.from('artworks').upload(filePath, file, { contentType: file.type })
           if (uploadErr) throw uploadErr
           const { data: { publicUrl } } = supabase.storage.from('artworks').getPublicUrl(filePath)
@@ -328,7 +319,7 @@ function ArtworkForm({ item, usedMediums, onSave, onCancel, busy }) {
 
   const set = (key) => (e) => setForm({ ...form, [key]: e.target.value })
 
-  const mediumOptions = Array.from(new Set([...DEFAULT_MEDIUMS, ...usedMediums])).sort()
+  const mediumOptions = buildMediumOptions(usedMediums)
 
   const handleDeleteImage = async (imageId) => {
     if (!confirm('Delete this image?')) return
