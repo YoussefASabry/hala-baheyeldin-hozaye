@@ -2,6 +2,7 @@ import './globals.css';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { getArtistProfile } from '@/lib/db';
+import { Analytics } from '@vercel/analytics/next';
 
 const TITLE = 'Hala Baheyeldin Hozayen — Original Oil Paintings';
 const DESCRIPTION = 'Original oil paintings, acrylics and mixed media for sale — visual artist Hala Baheyeldin Hozayen.';
@@ -38,6 +39,7 @@ export default async function RootLayout({ children }) {
             <Footer profile={profile} />
           </div>
         </div>
+        <Analytics />
       </body>
     </html>
   );
